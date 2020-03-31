@@ -1,6 +1,7 @@
 import Home from './pages/Home'
 import Register from './pages/Register';
 import Login from './pages/Login';
+import ManageUser from './pages/ManageUser';
 
 export default [
   {
@@ -19,8 +20,8 @@ export default [
     name: 'login'
   },
   {
-    path: '/update-profile',
-    component: Login,
-    name: 'login'
+    path: '/manage-user',
+    component: ManageUser,
+    name: 'manage-user'
   }
 ]

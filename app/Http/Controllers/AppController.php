@@ -13,6 +13,11 @@ class AppController extends Controller
       $user = Auth::user();
       return response()->json(['user' => $user], 200);
     }
+    public function read()
+    {
+      $user = User::all();
+      return response()->json(['users' => $user], 200);
+    }
     public function login(Request $request)
     {
       if (Auth::attempt(['email' => $request->email, 'password' => $request->password], true))

@@ -31,6 +31,7 @@
                 </div>
 
                 <div v-else>
+                  <router-link to="/manage-user" class="dropdown-item">Manage User</router-link>
                   <a @click="logout" href="javascript:;" class="dropdown-item">Logout</a>
                 </div>
               </div>
