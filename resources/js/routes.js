@@ -17,5 +17,10 @@ export default [
     path: '/login',
     component: Login,
     name: 'login'
+  },
+  {
+    path: '/update-profile',
+    component: Login,
+    name: 'login'
   }
 ]

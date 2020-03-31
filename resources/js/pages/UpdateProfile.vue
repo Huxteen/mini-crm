@@ -17,21 +17,15 @@
             </div>
 
 
+
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" class="form-control" placeholder="Name" v-model="name">
+            </div>  
             <div class="form-group">
               <label>Email</label>
               <input type="email" class="form-control" placeholder="Email" v-model="email">
-            </div>
-
-            <div class="form-group">
-              <label>Role</label>
-              <select class="form-control" v-model="role">
-                <option selected value="">Please select user role</option>
-                <option value="1">Admin</option>
-                <option value="2">Company</option>
-                <option value="3">Employee</option>
-              </select>
-            </div>
-
+            </div>  
             <div class="form-group">
               <label>Password</label>
               <input type="password" class="form-control" placeholder="Password" v-model="password">
@@ -56,7 +50,7 @@
    props: ['app'],
    data() { 
      return {
-       role: '',
+       name: '',
        email: '',
        password: '',
        confirm_password: '',
@@ -67,9 +61,9 @@
      onSubmit(){
        this.errors = [];
 
-       if(!this.role)
+       if(!this.name)
        {
-         this.errors.push('Role is required.');
+         this.errors.push('Name is required.');
        }
 
        if(!this.email)
@@ -95,7 +89,7 @@
        if(!this.errors.length)
        {
          const data = {
-           role: this.role,
+           name: this.name,
            email: this.email,
            password: this.password
          }

@@ -8,8 +8,9 @@ Route::get('/', function () {
 
 Route::prefix('auth')->group(function(){
   Route::get('init', 'AppController@init');
-  
+
   Route::post('login', 'AppController@login');
   Route::post('register', 'AppController@register');
+  // Route::put('update-profile/{id}', 'AppController@updateProfile');
   Route::post('logout', 'AppController@logout');
 });

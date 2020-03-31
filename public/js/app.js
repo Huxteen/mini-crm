@@ -2017,6 +2017,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'navbar',
   props: ['app'],
@@ -2202,12 +2203,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'register',
   props: ['app'],
   data: function data() {
     return {
-      name: '',
+      role: '',
       email: '',
       password: '',
       confirm_password: '',
@@ -2220,8 +2227,8 @@ __webpack_require__.r(__webpack_exports__);
 
       this.errors = [];
 
-      if (!this.name) {
-        this.errors.push('Name is required.');
+      if (!this.role) {
+        this.errors.push('Role is required.');
       }
 
       if (!this.email) {
@@ -2242,7 +2249,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (!this.errors.length) {
         var data = {
-          name: this.name,
+          role: this.role,
           email: this.email,
           password: this.password
         };
@@ -37718,7 +37725,9 @@ var render = function() {
                     [
                       _vm._v(
                         "\n              " +
-                          _vm._s(_vm.app.user ? _vm.app.user.name : "Account") +
+                          _vm._s(
+                            _vm.app.user ? _vm.app.user.email : "Account"
+                          ) +
                           "\n            "
                       )
                     ]
@@ -37755,15 +37764,17 @@ var render = function() {
                             ],
                             1
                           )
-                        : _c(
-                            "a",
-                            {
-                              staticClass: "dropdown-item",
-                              attrs: { href: "javascript:;" },
-                              on: { click: _vm.logout }
-                            },
-                            [_vm._v("Logout")]
-                          )
+                        : _c("div", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "dropdown-item",
+                                attrs: { href: "javascript:;" },
+                                on: { click: _vm.logout }
+                              },
+                              [_vm._v("Logout")]
+                            )
+                          ])
                     ]
                   )
                 ])
@@ -38007,32 +38018,6 @@ var render = function() {
                 : _vm._e(),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("Name")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.name,
-                      expression: "name"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text", placeholder: "Name" },
-                  domProps: { value: _vm.name },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.name = $event.target.value
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
                 _c("label", [_vm._v("Email")]),
                 _vm._v(" "),
                 _c("input", {
@@ -38056,6 +38041,55 @@ var render = function() {
                     }
                   }
                 })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", [_vm._v("Role")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.role,
+                        expression: "role"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.role = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { selected: "", value: "" } }, [
+                      _vm._v("Please select user role")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "1" } }, [_vm._v("Admin")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "2" } }, [
+                      _vm._v("Company")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "3" } }, [
+                      _vm._v("Employee")
+                    ])
+                  ]
+                )
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
@@ -54349,6 +54383,10 @@ __webpack_require__.r(__webpack_exports__);
   name: 'register'
 }, {
   path: '/login',
+  component: _pages_Login__WEBPACK_IMPORTED_MODULE_2__["default"],
+  name: 'login'
+}, {
+  path: '/update-profile',
   component: _pages_Login__WEBPACK_IMPORTED_MODULE_2__["default"],
   name: 'login'
 }]);

@@ -37,8 +37,8 @@ class AppController extends Controller
 
 
       $user = new User();
-      $user->name = $request->name;
       $user->email = $request->email;
+      $user->role = $request->role;
       $user->password = bcrypt($request->password);
       $user->save();
 
@@ -47,6 +47,16 @@ class AppController extends Controller
       return response()->json($user, 200);
 
     }
+    // public function updateProfile(Request $request, $id)
+    // {
+    //   $user = User::find($id);
+    //   $user->name = $request->name;
+    //   $user->password = bcrypt($request->password);
+    //   $user->save();
+
+    //   return response()->json($user, 200);
+
+    // }
     public function logout()
     {
       Auth::logout();
