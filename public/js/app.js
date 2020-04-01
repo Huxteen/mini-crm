@@ -2019,6 +2019,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'navbar',
   props: ['app'],
@@ -2190,12 +2220,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'manage-user',
   props: ['app'],
   data: function data() {
     return {
-      users: null
+      users: ''
     };
   },
   mounted: function mounted() {
@@ -2270,11 +2303,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'register',
   props: ['app'],
   data: function data() {
     return {
+      name: '',
       role: '',
       email: '',
       password: '',
@@ -2290,6 +2329,10 @@ __webpack_require__.r(__webpack_exports__);
 
       if (!this.role) {
         this.errors.push('Role is required.');
+      }
+
+      if (!this.name) {
+        this.errors.push('Name is required.');
       }
 
       if (!this.email) {
@@ -2310,10 +2353,12 @@ __webpack_require__.r(__webpack_exports__);
 
       if (!this.errors.length) {
         var data = {
+          name: this.name,
           role: this.role,
           email: this.email,
           password: this.password
         };
+        console.log(data);
         this.app.req.post('auth/register', data).then(function (response) {
           _this.app.user = response.data;
 
@@ -37769,6 +37814,130 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("ul", { staticClass: "navbar-nav ml-auto" }, [
+                _vm.app.user
+                  ? _c("span", [
+                      _vm.app.user.role == 1
+                        ? _c("li", { staticClass: "nav-item dropdown" }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "nav-link dropdown-toggle",
+                                attrs: {
+                                  href: "#",
+                                  id: "navbarDropdown",
+                                  role: "button",
+                                  "data-toggle": "dropdown",
+                                  "aria-haspopup": "true",
+                                  "aria-expanded": "false"
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                " +
+                                    _vm._s("Companies") +
+                                    "\n              "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "dropdown-menu",
+                                attrs: { "aria-labelledby": "navbarDropdown" }
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  [
+                                    _c(
+                                      "router-link",
+                                      {
+                                        staticClass: "dropdown-item",
+                                        attrs: { to: "/" }
+                                      },
+                                      [_vm._v("View Company")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "router-link",
+                                      {
+                                        staticClass: "dropdown-item",
+                                        attrs: { to: "/" }
+                                      },
+                                      [_vm._v("Add Company")]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
+                            )
+                          ])
+                        : _vm._e()
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.app.user
+                  ? _c("span", [
+                      _vm.app.user.role == 1 && _vm.app.user
+                        ? _c("li", { staticClass: "nav-item dropdown" }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "nav-link dropdown-toggle",
+                                attrs: {
+                                  href: "#",
+                                  id: "navbarDropdown",
+                                  role: "button",
+                                  "data-toggle": "dropdown",
+                                  "aria-haspopup": "true",
+                                  "aria-expanded": "false"
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                Employees\n              "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "dropdown-menu",
+                                attrs: { "aria-labelledby": "navbarDropdown" }
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  [
+                                    _c(
+                                      "router-link",
+                                      {
+                                        staticClass: "dropdown-item",
+                                        attrs: { to: "/" }
+                                      },
+                                      [_vm._v("View Employees")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "router-link",
+                                      {
+                                        staticClass: "dropdown-item",
+                                        attrs: { to: "/" }
+                                      },
+                                      [_vm._v("Add Employee")]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
+                            )
+                          ])
+                        : _vm._e()
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
                 _c("li", { staticClass: "nav-item dropdown" }, [
                   _c(
                     "a",
@@ -38064,7 +38233,9 @@ var render = function() {
           return _c("tr", { key: index }, [
             _c("th", { attrs: { scope: "row" } }, [_vm._v(_vm._s(index + 1))]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(user.email))]),
+            _c("td", { staticClass: "tc" }, [_vm._v(_vm._s(user.name))]),
+            _vm._v(" "),
+            _c("td", { staticClass: "lc" }, [_vm._v(_vm._s(user.email))]),
             _vm._v(" "),
             _c("td", [
               user.role == 1
@@ -38091,6 +38262,8 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
         _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Name")]),
+        _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Email")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Role")]),
@@ -38105,7 +38278,11 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("td", [
       _c("button", { staticClass: "btn btn-info", attrs: { type: "button" } }, [
-        _vm._v("Action")
+        _vm._v("Add")
+      ]),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-info", attrs: { type: "button" } }, [
+        _vm._v("view")
       ])
     ])
   }
@@ -38167,6 +38344,32 @@ var render = function() {
                     )
                   ])
                 : _vm._e(),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", [_vm._v("Name")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.name,
+                      expression: "name"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", placeholder: "Name" },
+                  domProps: { value: _vm.name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.name = $event.target.value
+                    }
+                  }
+                })
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
                 _c("label", [_vm._v("Email")]),

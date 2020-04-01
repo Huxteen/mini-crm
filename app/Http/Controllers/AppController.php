@@ -27,22 +27,21 @@ class AppController extends Controller
       else
       {
         return response()->json(['error' => 'Email or password do not match our record.'], 401);
-
       }
 
     }
     public function register(Request $request)
     {
-
-      $user = User::where('email', $request->email)->first();
+      $email = strtolower($request->email);
+      $user = User::where('email', $email)->first();
       if (isset($user->id))
       {
         return response()->json(['error' => 'Email Already exists.'], 401);
       }
 
-
       $user = new User();
-      $user->email = $request->email;
+      $user->name = $request->name;
+      $user->email = $email;
       $user->role = $request->role;
       $user->password = bcrypt($request->password);
       $user->save();
@@ -50,18 +49,7 @@ class AppController extends Controller
       Auth::login($user);
 
       return response()->json($user, 200);
-
     }
-    // public function updateProfile(Request $request, $id)
-    // {
-    //   $user = User::find($id);
-    //   $user->name = $request->name;
-    //   $user->password = bcrypt($request->password);
-    //   $user->save();
-
-    //   return response()->json($user, 200);
-
-    // }
     public function logout()
     {
       Auth::logout();

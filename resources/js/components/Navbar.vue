@@ -20,6 +20,37 @@
           </ul>
 
           <ul class="navbar-nav ml-auto">
+             <span v-if="app.user">
+              <li class="nav-item dropdown" v-if="app.user.role == 1">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{ 'Companies' }}
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <div>
+                    <router-link to="/" class="dropdown-item">View Company</router-link>
+                    <router-link to="/" class="dropdown-item">Add Company</router-link>
+                  </div>
+                </div>
+              </li>
+            </span>
+
+            <span v-if="app.user">
+              <li class="nav-item dropdown" v-if="app.user.role == 1 && app.user">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Employees
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <div>
+                    <router-link to="/" class="dropdown-item">View Employees</router-link>
+                    <router-link to="/" class="dropdown-item">Add Employee</router-link>
+                  </div>
+                </div>
+              </li>
+            </span>
+
+
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{ app.user ? app.user.email : 'Account' }}
@@ -36,7 +67,6 @@
                 </div>
               </div>
             </li>
-
           </ul>
           
         </div>

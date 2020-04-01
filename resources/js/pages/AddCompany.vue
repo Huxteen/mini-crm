@@ -107,10 +107,9 @@
          const data = {
            name: this.name,
            role: this.role,
-           email: this.email,
+           email: (this.email).toLowerCase,
            password: this.password
          }
-         console.log(data);
          this.app.req.post('auth/register', data).then(response => {
           this.app.user = response.data;
           this.$router.push("/");
