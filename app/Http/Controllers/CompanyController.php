@@ -152,15 +152,15 @@ class CompanyController extends Controller
      * @param  \App\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Company $company, $id)
+    public function destroy(Request $Request, Company $company, $id)
     {
       $company = Company::find($id);
       $company->delete();
 
       $msg = $company->name." - Company has been deleted successfully";
       return response()->json([
-        'id' => $id,
         'success' => $msg,
+        'company' => $company,
       ], 401);
     }
 }

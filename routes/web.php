@@ -21,4 +21,5 @@ Route::prefix('company')->group(function(){
   Route::post('create', 'CompanyController@store');
   Route::get('show/{id}', 'CompanyController@show');
   Route::put('update/{id}', 'CompanyController@update');
+  Route::delete('delete/{id}', 'CompanyController@destroy');
 });
