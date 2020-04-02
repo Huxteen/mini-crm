@@ -99,9 +99,10 @@ class CompanyController extends Controller
      * @param  \App\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function edit(Company $company)
+    public function edit(Company $company, $id)
     {
-        //
+      $company = Company::find($id);
+      return response()->json($company, 200);
     }
 
     /**
@@ -124,7 +125,7 @@ class CompanyController extends Controller
       $company = Company::find($id);
       // $company->name = $request->name;
       $company->name =  $request->name;
-      $company->url = $request->url;;
+      $company->url = $request->url;
       if($request->hasFile('logo')){
         $logo= $request->file('logo');
         $filename = time().'.'.$logo->getClientOriginalExtension();

@@ -16,5 +16,10 @@ class VerifyCsrfToken extends Middleware
         'http://127.0.0.1:8000/company/create',
         'http://127.0.0.1:8000/company/update/*',
         'http://127.0.0.1:8000/company/delete/*',
+        'http://127.0.0.1:8000/employee/index',
+        'http://127.0.0.1:8000/employee/create',
+        'http://127.0.0.1:8000/employee/update/*',
+        'http://127.0.0.1:8000/employee-update/update/*',
+        'http://127.0.0.1:8000/employee/delete/*',
     ];
 }
