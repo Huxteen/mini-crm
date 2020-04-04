@@ -117,7 +117,7 @@ class EmployeeController extends Controller
       $employee->name =  $request->name;
       // check if the company_id field is provided
       // check if Authenticated user is an admin user
-      if($request->company_id){
+      if($request->company_id && auth()->user()->role == 1){
         $employee->company_id = $request->company_id;
       }
       $employee->save();

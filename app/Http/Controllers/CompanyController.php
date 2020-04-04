@@ -19,6 +19,12 @@ class CompanyController extends Controller
       $companies = Company::with('user')->get();
       return response()->json(['companies' => $companies], 200);
     }
+    public function paginatedCompany()
+    {
+      $companies = Company::paginate(5);
+      // $companies->user->makeHidden('user:email,id');
+      return response()->json(['companies' => $companies], 200);
+    }
 
     /**
      * Show the form for creating a new resource.

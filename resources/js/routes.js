@@ -10,18 +10,13 @@ export default [
     name: 'home'
   },
   {
-    path: '/register',
-    component: Register,
-    name: 'register'
-  },
-  {
     path: '/login',
     component: Login,
     name: 'login'
   },
   {
-    path: '/manage-user',
-    component: ManageUser,
-    name: 'manage-user'
+    path: '/dashboard',
+    component: Dashboard,
+    name: 'dashboard'
   }
 ]

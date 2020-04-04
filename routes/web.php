@@ -11,9 +11,7 @@ Route::get('/', function () {
 // API Routes For Users
 Route::prefix('auth')->group(function(){
   Route::get('init', 'AppController@init');
-  Route::get('manage-user', 'AppController@read');
   Route::post('login', 'AppController@login');
-  Route::post('register', 'AppController@register');
   Route::post('logout', 'AppController@logout');
 });
 
@@ -21,6 +19,7 @@ Route::prefix('auth')->group(function(){
 // API Routes For Companies
 Route::prefix('company')->group(function(){
   Route::get('index', 'CompanyController@index');
+  Route::get('home', 'CompanyController@paginatedCompany');
   Route::post('create', 'CompanyController@store');
   Route::get('show/{id}', 'CompanyController@show');
   Route::get('edit/{id}', 'CompanyController@edit');
