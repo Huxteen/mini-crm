@@ -1,4 +1,18 @@
+// const mix = require('laravel-mix');
+
+
+const path = require('path');
 const mix = require('laravel-mix');
+
+
+
+mix.webpackConfig({
+  resolve: {
+    alias: {
+      "@": ".."
+    }
+  }
+});
 
 /*
  |--------------------------------------------------------------------------
@@ -14,4 +28,14 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css');
 
-mix.copy('ui/creative-tim/public', 'public');
+mix.options({
+  vue: {
+    esModule: true
+  },
+  terser: {
+    terserOptions: {
+      warnings: true
+    }
+  }
+});
+mix.copy('ui/vue-paper/public/', 'public');

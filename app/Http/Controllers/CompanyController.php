@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\Employee;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Image;
 
@@ -22,8 +24,18 @@ class CompanyController extends Controller
     public function paginatedCompany()
     {
       $companies = Company::paginate(5);
-      // $companies->user->makeHidden('user:email,id');
-      return response()->json(['companies' => $companies], 200);
+      $users = User::all()->count();
+      $company = Company::all()->count();
+      $employees = Employee::all()->count();
+      $admins = User::where('role','=', 1)->get()->count();
+   
+      return response()->json([
+        'companies' => $companies,
+        'users' => $users,
+        'company' => $company,
+        'employees' => $employees,
+        'admins' => $admins,
+      ], 200);
     }
 
     /**
@@ -59,7 +71,7 @@ class CompanyController extends Controller
       if($request->hasFile('logo')){
           $logo= $request->file('logo');
           $filename = time().'.'.$logo->getClientOriginalExtension();
-          Image::make($logo)->resize(220, 220)->save(storage_path('app/public/logo/'.$filename));
+          Image::make($logo)->resize(null, 220)->save(('./storage/logo/'.$filename));
       }
 
       $email = strtolower($request->email);
@@ -84,7 +96,39 @@ class CompanyController extends Controller
 
       $company = Company::find($company->id);
 
-      return response()->json($company, 200);
+      return response()->json([
+        'success' => "Company created successfully.",
+        'company' => $company,
+      ], 200);
+    }
+    public function storeAdmin(Request $request)
+    {
+      $validate = $request->validate([
+        'name'=>'required',
+        'email'=>'required',
+      ]);
+      if (!$validate)
+      {
+        return response()->json(['error' => 'All fields are required.'], 401);
+      }
+
+      $email = strtolower($request->email);
+      $user = User::where('email', $email)->first();
+      if (isset($user->id))
+      {
+        return response()->json(['error' => 'Email Already exists.'], 401);
+      }
+
+      $user = new User();
+      $user->email = $email;
+      $user->role = 1;
+      $user->password = bcrypt($request->password);
+      $user->save();
+
+      return response()->json([
+        'success' => "Admin added successfully.",
+        'user' =>  $user,
+      ], 200);
     }
 
     /**
@@ -98,6 +142,14 @@ class CompanyController extends Controller
       $company = Company::find($id);
       return response()->json($company, 200);
     }
+    public function init(Company $company)
+    {
+      $user = Auth::user();
+      $company = Company::where('user_id',"=", $user->id)->first();
+      return response()->json(
+        ['company' => $company],
+      200);
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -109,6 +161,15 @@ class CompanyController extends Controller
     {
       $company = Company::find($id);
       return response()->json($company, 200);
+    }
+    public function showEmployee(Company $company, Employee $employee, $id)
+    {
+      $employee = Employee::where('company_id','=', $id)->get();
+      $company = Company::find($id);
+      return response()->json([
+        'employee' => $employee,
+        'company' => $company
+      ], 200);
     }
 
     /**
@@ -135,7 +196,7 @@ class CompanyController extends Controller
       if($request->hasFile('logo')){
         $logo= $request->file('logo');
         $filename = time().'.'.$logo->getClientOriginalExtension();
-        Image::make($logo)->resize(220, 220)->save(storage_path('app/public/logo/'.$filename));
+        Image::make($logo)->resize(null, 220)->save(('./storage/logo/'.$filename));
         $company->logo = $filename;
       }
       $company->save();
@@ -150,7 +211,10 @@ class CompanyController extends Controller
       $user->save();
 
       $company = Company::find($id);
-      return response()->json($company, 200);
+      return response()->json([
+        'success' => "Company has been updated successfully.",
+        'company' => $company,
+      ], 200);
     }
 
     /**
@@ -162,12 +226,13 @@ class CompanyController extends Controller
     public function destroy(Request $Request, Company $company, $id)
     {
       $company = Company::find($id);
-      $company->delete();
+     
+      $user = User::find($company->user_id);
+      $user->delete();
 
-      $msg = $company->name." - Company has been deleted successfully";
       return response()->json([
-        'success' => $msg,
+        'success' => "Company has been deleted successfully",
         'company' => $company,
-      ], 401);
+      ], 200);
     }
 }

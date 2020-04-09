@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Employee;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends Controller
 {
@@ -17,6 +18,15 @@ class EmployeeController extends Controller
     {
       $employees = Employee::all();
       return response()->json(['employees' => $employees], 200);
+    }
+
+    public function init(Employee $employee)
+    {
+      $user = Auth::user();
+      $employee = Employee::where('user_id',"=", $user->id)->first();
+      return response()->json(
+        ['employee' => $employee],
+      200);
     }
 
     /**
@@ -69,7 +79,10 @@ class EmployeeController extends Controller
 
       $employee = Employee::find($employee->id);
 
-      return response()->json($employee, 200);
+      return response()->json([
+        'success' => "Employee created successfully.", 
+        'employee' => $employee], 
+        200);
     }
 
     /**
@@ -78,7 +91,7 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function show(Employee $employee)
+    public function show(Employee $employee, $id)
     {
       $employee = Employee::find($id);
       return response()->json($employee, 200);
@@ -117,7 +130,7 @@ class EmployeeController extends Controller
       $employee->name =  $request->name;
       // check if the company_id field is provided
       // check if Authenticated user is an admin user
-      if($request->company_id && auth()->user()->role == 1){
+      if($request->company_id){
         $employee->company_id = $request->company_id;
       }
       $employee->save();
@@ -125,6 +138,7 @@ class EmployeeController extends Controller
       $email = strtolower($request->email);
       $user = User::find($employee->user_id);
       $user->email = $email;
+      $user->role = 3;
       if($request->password)
       {
         $user->password = bcrypt($request->password);
@@ -132,7 +146,10 @@ class EmployeeController extends Controller
       $user->save();
 
       $employee = Employee::find($id);
-      return response()->json($employee, 200);
+      return response()->json([
+        'success' => 'Employee updated successfully',
+        'employee' => $employee,
+      ], 200);
     }
 
     /**
@@ -144,12 +161,14 @@ class EmployeeController extends Controller
     public function destroy(Employee $employee, $id)
     {
       $employee = Employee::find($id);
-      $employee->delete();
+
+      $user = User::find($employee->user_id);
+      $user->delete();
 
       $msg = "Employee has been deleted successfully";
       return response()->json([
-        'success' => $msg,
+        'success' => 'Employee has been deleted successfully',
         'employee' => $employee,
-      ], 401);
+      ], 200);
     }
 }

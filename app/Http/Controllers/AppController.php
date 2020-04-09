@@ -53,5 +53,6 @@ class AppController extends Controller
     public function logout()
     {
       Auth::logout();
+      return response()->json(['success' => 'Logout successful.'], 200);
     }
 }
